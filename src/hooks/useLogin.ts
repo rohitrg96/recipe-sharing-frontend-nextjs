@@ -3,17 +3,12 @@ import { FormikHelpers } from "formik";
 import { setCookie } from "nookies"; // Library to manage cookies
 
 interface LoginFormValues {
-  email: string;
+  userName: string;
   password: string;
 }
 
 // Custom hook for login logic
 export const useLogin = () => {
-  /**
-   * Handles form submission
-   * @param values - Form values submitted by the user
-   * @param actions - Formik helpers to manage form state
-   */
   const handleSubmit = async (
     values: LoginFormValues,
     actions: FormikHelpers<LoginFormValues>
@@ -23,30 +18,28 @@ export const useLogin = () => {
       const response = await loginUser(values);
 
       // Extract the JWT token from the API response
-      const { token } = response.data;
+      const token = response.data.data.token;
+      console.log(response.data, 123456);
 
       // Store the token in cookies
       setCookie(null, "authToken", token, {
         maxAge: 30 * 24 * 60 * 60, // Token expires in 30 days
         path: "/", // Cookie accessible across the entire site
-        httpOnly: false, // Can be accessed via JavaScript (set to true for increased security)
-        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-        sameSite: "Lax", // Helps mitigate CSRF attacks
       });
-
-      // Simulate storing the user token (or perform a redirect here)
-      console.log("Login successful. Token stored in cookies:", token);
 
       // Reset form fields on successful login
       actions.resetForm();
 
-      // Optional: Redirect the user to a protected page (e.g., dashboard)
+      console.log("Login successful. Token stored in cookies:", token);
+      // Redirect to the dashboard or another protected route
       // router.push("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login failed:", error);
 
-      // Set a generic error message
-      actions.setFieldError("email", "Invalid credentials. Please try again.");
+      // Set the error message from the caught error to Formik's status
+      actions.setStatus(
+        error.message || "An unexpected error occurred. Please try again."
+      );
     } finally {
       // Stop the submission loading state
       actions.setSubmitting(false);

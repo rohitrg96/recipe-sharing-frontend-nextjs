@@ -1,5 +1,5 @@
 // Initial values for login form
 export const loginInitialValues = {
-  email: "",
+  userName: "",
   password: "",
 };

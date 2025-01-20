@@ -1,31 +1,33 @@
 import { GetServerSideProps } from "next";
-import LoginForm from "@components/auth/LoginForm"; // Import LoginForm component
+import { parseCookies } from "nookies"; // To handle cookies
+import LoginForm from "@components/Auth/LoginForm"; // Import LoginForm component
 
 // Server-side props (for SSR)
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // You can fetch data here or initialize session state
-  // For instance, checking if the user is already logged in, etc.
+  const cookies = parseCookies(context); // Parse cookies from the request
+  const token = cookies.authToken; // Retrieve the token from cookies
 
-  const user = null; // Example: Check if the user is logged in, set as null if not
+  if (token) {
+    try {
+      return {
+        redirect: {
+          destination: "/", // Redirect to a protected route
+          permanent: false,
+        },
+      };
+    } catch (error) {
+      console.error("Invalid or expired token:", error);
+    }
+  }
 
+  // If no token or invalid token, render the login page
   return {
-    props: {
-      user,
-    },
+    props: {}, // Pass props as required
   };
 };
 
 // LoginPage Component
-const LoginPage = ({ user }: { user: any }) => {
-  if (user) {
-    // Redirect user if already logged in
-    return (
-      <div>
-        <h1>Redirecting to dashboard...</h1>
-      </div>
-    );
-  }
-
+const LoginPage = () => {
   return (
     <div>
       <h1>Login</h1>

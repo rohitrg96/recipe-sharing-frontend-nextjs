@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 // Validation schema for login form
 export const loginValidationSchema = Yup.object({
-  email: Yup.string()
+  userName: Yup.string()
     .email("Invalid email address") // Validate email format
     .required("Email is required"), // Ensure email is not empty
   password: Yup.string()

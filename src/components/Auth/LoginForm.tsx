@@ -1,20 +1,19 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { loginValidationSchema } from "@schemas/authschemas"; // Import validation schema
-import { loginInitialValues } from "@constants/formInitialValues"; // Import initial form values
-import { useLogin } from "@hooks/useLogin"; // Custom hook for login logic
+import { loginValidationSchema } from "@schemas/authschemas";
+import { loginInitialValues } from "@constants/formInitialValues";
+import { useLogin } from "@hooks/useLogin";
 
 const LoginForm: React.FC = () => {
-  // Use custom hook for form submission logic
   const { handleSubmit } = useLogin();
 
   return (
     <Formik
-      initialValues={loginInitialValues} // Set initial form values
-      validationSchema={loginValidationSchema} // Attach validation schema
-      onSubmit={handleSubmit} // Pass form submission handler
+      initialValues={loginInitialValues}
+      validationSchema={loginValidationSchema}
+      onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, status }) => (
         <Form className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md m-5">
           {/* Email Input Field */}
           <div className="mb-4">
@@ -26,13 +25,13 @@ const LoginForm: React.FC = () => {
             </label>
             <Field
               type="email"
-              id="email"
-              name="email"
+              id="userName"
+              name="userName"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
             <ErrorMessage
-              name="email"
+              name="userName"
               component="div"
               className="text-red-500 text-xs mt-1"
             />
@@ -60,11 +59,15 @@ const LoginForm: React.FC = () => {
             />
           </div>
 
+          {/* Global Error Message */}
+          {console.log(status, "123")}
+          {status && <div className="text-black text-sm mb-4">{status}</div>}
+
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-            disabled={isSubmitting} // Disable button while submitting
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
