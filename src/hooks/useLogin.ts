@@ -1,5 +1,6 @@
 import { loginUser } from '@services/authService'; // API service for login
 import { FormikHelpers } from 'formik';
+import router from 'next/router';
 import { setCookie } from 'nookies'; // Library to manage cookies
 
 interface LoginFormValues {
@@ -32,7 +33,7 @@ export const useLogin = () => {
 
       console.log('Login successful. Token stored in cookies:', token);
       // Redirect to the dashboard or another protected route
-      // router.push("/dashboard");
+      router.push('/');
     } catch (error: any) {
       console.error('Login failed:', error);
 

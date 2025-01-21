@@ -1,5 +1,6 @@
 import { signUpUser } from '@services/authService'; // API service for sign-up
 import { FormikHelpers } from 'formik';
+import router from 'next/router';
 
 interface SignUpFormValues {
   firstName: string;
@@ -18,6 +19,7 @@ export const useSignUp = () => {
       const response = await signUpUser(values);
 
       console.log('Sign-up successful:', response);
+      router.push('/login');
 
       // Reset the form on success
       actions.resetForm();

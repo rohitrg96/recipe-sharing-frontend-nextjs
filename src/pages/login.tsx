@@ -1,38 +1,20 @@
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies'; // To handle cookies
 import LoginForm from '@components/Auth/LoginForm'; // Import LoginForm component
-
-// Server-side props (for SSR)
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = parseCookies(context); // Parse cookies from the request
-  const token = cookies.authToken; // Retrieve the token from cookies
-
-  if (token) {
-    try {
-      return {
-        redirect: {
-          destination: '/', // Redirect to a protected route
-          permanent: false,
-        },
-      };
-    } catch (error) {
-      console.error('Invalid or expired token:', error);
-    }
-  }
-
-  // If no token or invalid token, render the login page
-  return {
-    props: {}, // Pass props as required
-  };
-};
+import { AuthRedirect } from '@components/Auth/AuthRedirect';
+import { checkAuthAndRedirect } from '@utils/authRedirectLogic';
+import { GetServerSideProps } from 'next';
 
 // LoginPage Component
 const LoginPage = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <AuthRedirect>
       <LoginForm />
-    </div>
+    </AuthRedirect>
   );
+};
+
+// Use the shared logic
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return await checkAuthAndRedirect(context); // Reuse the logic here
 };
 
 export default LoginPage;

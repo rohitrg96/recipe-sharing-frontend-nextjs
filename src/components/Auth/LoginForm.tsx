@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
               id="userName"
               name="userName"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
+              placeholder="Email"
             />
             <ErrorMessage
               name="userName"
@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
               id="password"
               name="password"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
+              placeholder="Password"
             />
             <ErrorMessage
               name="password"
@@ -63,7 +63,6 @@ const LoginForm: React.FC = () => {
           </div>
 
           {/* Global Error Message */}
-          {console.log(status, '123')}
           {status && <div className="text-black text-sm mb-4">{status}</div>}
 
           {/* Submit Button */}

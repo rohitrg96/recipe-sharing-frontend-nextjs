@@ -37,5 +37,5 @@ export const signUpUser = async (userData: {
   email: string;
   password: string;
 }) => {
-  return axios.post(`${API_URL}/auth/signup`, userData);
+  return axios.post(`${API_URL}/users`, userData);
 };

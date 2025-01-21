@@ -18,48 +18,52 @@ const SignUpForm: React.FC = () => {
           <h2 className="text-2xl font-bold mb-4 text-center">
             Welcome to the Recipe World! 🍳
           </h2>
-          {/* First Name Input Field */}
-          <div className="mb-4">
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              First Name
-            </label>
-            <Field
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="Enter your first name"
-              className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <ErrorMessage
-              name="firstName"
-              component="div"
-              className="text-red-500 text-xs mt-1"
-            />
-          </div>
 
-          {/* Last Name Input Field */}
-          <div className="mb-4">
-            <label
-              htmlFor="lastName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Last Name
-            </label>
-            <Field
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Enter your last name"
-              className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <ErrorMessage
-              name="lastName"
-              component="div"
-              className="text-red-500 text-xs mt-1"
-            />
+          {/* First Name and Last Name Input Fields Side by Side */}
+          <div className="mb-4 flex space-x-4">
+            {/* First Name Field */}
+            <div className="flex-1">
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                First Name
+              </label>
+              <Field
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="First name"
+                className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="text-red-500 text-xs mt-1"
+              />
+            </div>
+
+            {/* Last Name Field */}
+            <div className="flex-1">
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Last Name
+              </label>
+              <Field
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Last name"
+                className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                className="text-red-500 text-xs mt-1"
+              />
+            </div>
           </div>
 
           {/* Email Input Field */}
@@ -74,7 +78,7 @@ const SignUpForm: React.FC = () => {
               type="email"
               id="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder="Email"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <ErrorMessage
@@ -96,7 +100,7 @@ const SignUpForm: React.FC = () => {
               type="password"
               id="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Password"
               className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <ErrorMessage
