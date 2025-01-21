@@ -1,6 +1,6 @@
-import { loginUser } from "@services/authService"; // API service for login
-import { FormikHelpers } from "formik";
-import { setCookie } from "nookies"; // Library to manage cookies
+import { loginUser } from '@services/authService'; // API service for login
+import { FormikHelpers } from 'formik';
+import { setCookie } from 'nookies'; // Library to manage cookies
 
 interface LoginFormValues {
   userName: string;
@@ -22,23 +22,23 @@ export const useLogin = () => {
       console.log(response.data, 123456);
 
       // Store the token in cookies
-      setCookie(null, "authToken", token, {
+      setCookie(null, 'authToken', token, {
         maxAge: 30 * 24 * 60 * 60, // Token expires in 30 days
-        path: "/", // Cookie accessible across the entire site
+        path: '/', // Cookie accessible across the entire site
       });
 
       // Reset form fields on successful login
       actions.resetForm();
 
-      console.log("Login successful. Token stored in cookies:", token);
+      console.log('Login successful. Token stored in cookies:', token);
       // Redirect to the dashboard or another protected route
       // router.push("/dashboard");
     } catch (error: any) {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
 
       // Set the error message from the caught error to Formik's status
       actions.setStatus(
-        error.message || "An unexpected error occurred. Please try again."
+        error.message || 'An unexpected error occurred. Please try again.'
       );
     } finally {
       // Stop the submission loading state

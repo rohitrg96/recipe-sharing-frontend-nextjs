@@ -1,5 +1,5 @@
-import { signUpUser } from "@services/authService"; // API service for sign-up
-import { FormikHelpers } from "formik";
+import { signUpUser } from '@services/authService'; // API service for sign-up
+import { FormikHelpers } from 'formik';
 
 interface SignUpFormValues {
   firstName: string;
@@ -17,15 +17,15 @@ export const useSignUp = () => {
       // Call the sign-up API
       const response = await signUpUser(values);
 
-      console.log("Sign-up successful:", response);
+      console.log('Sign-up successful:', response);
 
       // Reset the form on success
       actions.resetForm();
     } catch (error: any) {
-      console.error("Sign-up failed:", error);
+      console.error('Sign-up failed:', error);
       // Display error message on the form
       actions.setStatus(
-        error.response?.data?.message || "An unexpected error occurred."
+        error.response?.data?.message || 'An unexpected error occurred.'
       );
     } finally {
       actions.setSubmitting(false);

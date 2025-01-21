@@ -1,6 +1,6 @@
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies"; // To handle cookies
-import LoginForm from "@components/Auth/LoginForm"; // Import LoginForm component
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies'; // To handle cookies
+import LoginForm from '@components/Auth/LoginForm'; // Import LoginForm component
 
 // Server-side props (for SSR)
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -11,12 +11,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
       return {
         redirect: {
-          destination: "/", // Redirect to a protected route
+          destination: '/', // Redirect to a protected route
           permanent: false,
         },
       };
     } catch (error) {
-      console.error("Invalid or expired token:", error);
+      console.error('Invalid or expired token:', error);
     }
   }
 

@@ -1,8 +1,8 @@
-import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { loginValidationSchema } from "@schemas/authschemas";
-import { loginInitialValues } from "@constants/formInitialValues";
-import { useLogin } from "@hooks/useLogin";
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { loginValidationSchema } from '@schemas/authschemas';
+import { loginInitialValues } from '@constants/formInitialValues';
+import { useLogin } from '@hooks/useLogin';
 
 const LoginForm: React.FC = () => {
   const { handleSubmit } = useLogin();
@@ -63,7 +63,7 @@ const LoginForm: React.FC = () => {
           </div>
 
           {/* Global Error Message */}
-          {console.log(status, "123")}
+          {console.log(status, '123')}
           {status && <div className="text-black text-sm mb-4">{status}</div>}
 
           {/* Submit Button */}
@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
             className="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Logging in..." : "Login"}
+            {isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </Form>
       )}

@@ -1,7 +1,7 @@
 // src/pages/auth/sign-up.tsx
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies"; // To check cookies for authentication
-import SignUpForm from "@components/Auth/SignUpForm";
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies'; // To check cookies for authentication
+import SignUpForm from '@components/Auth/SignUpForm';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parseCookies(context);
@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (cookies.authToken) {
     return {
       redirect: {
-        destination: "/login", // Redirect to a protected page
+        destination: '/login', // Redirect to a protected page
         permanent: false,
       },
     };
