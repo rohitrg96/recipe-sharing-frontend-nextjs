@@ -30,3 +30,12 @@ export const loginUser = async (credentials: {
     throw new Error("An unexpected error occurred.");
   }
 };
+
+export const signUpUser = async (userData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}) => {
+  return axios.post(`${API_URL}/auth/signup`, userData);
+};

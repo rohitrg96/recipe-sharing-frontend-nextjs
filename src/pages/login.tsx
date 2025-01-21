@@ -29,8 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 // LoginPage Component
 const LoginPage = () => {
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
       <LoginForm />
     </div>
   );

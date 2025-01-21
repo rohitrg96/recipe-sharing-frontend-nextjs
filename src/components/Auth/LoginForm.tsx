@@ -14,7 +14,10 @@ const LoginForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, status }) => (
-        <Form className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md m-5">
+        <Form className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4 text-center">
+            Welcome Back! 👋
+          </h2>
           {/* Email Input Field */}
           <div className="mb-4">
             <label
