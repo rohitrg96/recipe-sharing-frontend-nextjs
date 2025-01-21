@@ -3,9 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { signUpValidationSchema } from '@schemas/authschemas'; // Validation schema
 import { signUpInitialValues } from '@constants/formInitialValues'; // Initial values
 import { useSignUp } from '@hooks/useSignup'; // Custom hook for sign-up logic
+import AuthRedirectLinks from './Navigation';
 
 const SignUpForm: React.FC = () => {
-  const { handleSubmit } = useSignUp();
+  const { handleSubmit, navigateToLogin, navigateToHome } = useSignUp();
 
   return (
     <Formik
@@ -121,6 +122,15 @@ const SignUpForm: React.FC = () => {
           >
             {isSubmitting ? 'Signing up...' : 'Sign Up'}
           </button>
+
+          {/* Links for navigation */}
+          {/* Reusable Navigation Links */}
+          <AuthRedirectLinks
+            linkText1="Already have an account? Click here to Log in!"
+            linkText2="Not signing up? Head back to the homepage"
+            onLinkClick1={navigateToLogin} // Navigate to login page
+            onLinkClick2={navigateToHome} // Navigate to homepage
+          />
         </Form>
       )}
     </Formik>

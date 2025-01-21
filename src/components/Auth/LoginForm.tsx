@@ -3,9 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { loginValidationSchema } from '@schemas/authschemas';
 import { loginInitialValues } from '@constants/formInitialValues';
 import { useLogin } from '@hooks/useLogin';
+import AuthRedirectLinks from './Navigation';
 
 const LoginForm: React.FC = () => {
-  const { handleSubmit } = useLogin();
+  const { handleSubmit, navigateToSignUp, navigateToHome } = useLogin();
 
   return (
     <Formik
@@ -73,6 +74,13 @@ const LoginForm: React.FC = () => {
           >
             {isSubmitting ? 'Logging in...' : 'Login'}
           </button>
+
+          <AuthRedirectLinks
+            linkText1="Don't have an account? Click here to Sign up!"
+            linkText2="Not logging in? Head back to the homepage"
+            onLinkClick1={navigateToSignUp} // Navigate to login page
+            onLinkClick2={navigateToHome} // Navigate to homepage
+          />
         </Form>
       )}
     </Formik>

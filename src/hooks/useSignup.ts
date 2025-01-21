@@ -18,8 +18,9 @@ export const useSignUp = () => {
       // Call the sign-up API
       const response = await signUpUser(values);
 
-      console.log('Sign-up successful:', response);
-      router.push('/login');
+      if (response) {
+        router.push('/login');
+      }
 
       // Reset the form on success
       actions.resetForm();
@@ -34,5 +35,13 @@ export const useSignUp = () => {
     }
   };
 
-  return { handleSubmit };
+  const navigateToLogin = () => {
+    router.push('/login'); // Navigate to the login page
+  };
+
+  const navigateToHome = () => {
+    router.push('/'); // Navigate to the homepage
+  };
+
+  return { handleSubmit, navigateToLogin, navigateToHome };
 };

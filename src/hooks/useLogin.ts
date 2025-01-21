@@ -20,7 +20,6 @@ export const useLogin = () => {
 
       // Extract the JWT token from the API response
       const token = response.data.data.token;
-      console.log(response.data, 123456);
 
       // Store the token in cookies
       setCookie(null, 'authToken', token, {
@@ -31,7 +30,6 @@ export const useLogin = () => {
       // Reset form fields on successful login
       actions.resetForm();
 
-      console.log('Login successful. Token stored in cookies:', token);
       // Redirect to the dashboard or another protected route
       router.push('/');
     } catch (error: any) {
@@ -47,5 +45,12 @@ export const useLogin = () => {
     }
   };
 
-  return { handleSubmit };
+  const navigateToSignUp = () => {
+    router.push('/signup'); // Navigate to the login page
+  };
+
+  const navigateToHome = () => {
+    router.push('/'); // Navigate to the homepage
+  };
+  return { handleSubmit, navigateToSignUp, navigateToHome };
 };
