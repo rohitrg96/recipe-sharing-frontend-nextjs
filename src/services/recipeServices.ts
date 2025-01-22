@@ -18,12 +18,16 @@ export const fetchRecipesService = async (
   try {
     // Construct query string based on filters and pagination
     const query = new URLSearchParams({
-      ingredients: filters.ingredients || '',
+      ingredients: filters.ingredients.trim() || '',
       minRating: filters.minRating || '',
       maxPreparationTime: filters.maxPreparationTime || '',
       page,
       limit,
     }).toString();
+    console.log(query, 'query');
+
+    //recipe-sharing-backend-theta.vercel.app/api/
+    // recipes?ingredients=oni%5C&minRating=&maxPreparationTime=&page=1&limit=12
 
     // API call to fetch recipes
     const response = await axios.get(`${API_URL}/recipes?${query}`);

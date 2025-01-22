@@ -13,7 +13,7 @@ export interface RecipeCardsProps {
   recipes: Recipe[];
   currentPage: string;
   totalPages: number;
-  onPageChange: (page: string) => Promise<void>;
+  onPageChange: (page: SetStateAction<string>) => void;
 }
 
 export interface HomePageProps {
@@ -33,4 +33,16 @@ export interface HeaderProps {
   onFiltersChange: (key: string, value: string | number) => void;
   setFiltersState: Dispatch<SetStateAction<Filter>>;
   initialFilters: Filter;
+}
+
+interface Pagination {
+  totalPages: number;
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface FetchRecipesResponse {
+  data: Recipe[];
+  pagination: Pagination;
 }
