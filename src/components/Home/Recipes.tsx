@@ -10,7 +10,7 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({
 }) => {
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      onPageChange(newPage); // Trigger parent callback
+      onPageChange(newPage.toString()); // Trigger parent callback
     }
   };
 
@@ -84,8 +84,8 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({
       {/* Pagination */}
       <div className="mt-6 flex justify-center space-x-2">
         <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          onClick={() => handlePageChange(Number(currentPage) - 1)}
+          disabled={Number(currentPage) === 1}
           className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
         >
           Previous
@@ -95,7 +95,7 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
             className={`px-4 py-2 rounded-md ${
-              currentPage === index + 1
+              Number(currentPage) === index + 1
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-200 text-gray-800'
             }`}
@@ -104,8 +104,8 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({
           </button>
         ))}
         <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(Number(currentPage) + 1)}
+          disabled={Number(currentPage) === totalPages}
           className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
         >
           Next
