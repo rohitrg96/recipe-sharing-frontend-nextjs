@@ -66,7 +66,7 @@ const HomePage: React.FC<HomePageProps> = ({
               onPageChange={handlePageChange} // Pagination handler
             />
           ) : (
-            <div className="flex justify-center text-center text-red-500 text-xl h-64 mt-10">
+            <div className="flex items-center justify-center text-center text-red-500 text-xl h-64 mt-10">
               <p>Oops! No Recipes found, try rephrasing the query.</p>
             </div>
           )}

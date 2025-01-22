@@ -16,9 +16,13 @@ const Header: React.FC<HeaderProps> = ({
   };
   return (
     <header className="p-6 bg-white shadow-md">
-      <h1 className="text-2xl font-bold text-center">
-        Find Your Perfect Recipe 🍲
-      </h1>
+      <div className="text-center my-10">
+        <h2 className="text-4xl font-bold text-gray-800  mb-5">Recipes</h2>
+        <h3 className="text-xl font-semibold text-gray-800 leading-relaxed">
+          Explore thousands of mouthwatering recipes from every corner of the
+          globe! 🍲
+        </h3>
+      </div>
       <div className="mt-4 flex flex-col md:flex-row justify-center items-center gap-4">
         {/* Search */}
         <input

@@ -19,7 +19,10 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
    * Memoized query key for React Query. This ensures the query key updates
    * only when filtersState changes, reducing unnecessary re-renders.
    */
-  const queryKey = useMemo(() => ['recipes', filtersState], [filtersState]);
+  const queryKey = useMemo(
+    () => ['recipes', filtersState, currentPage],
+    [filtersState, currentPage]
+  );
 
   console.log(queryKey, 'queryKey');
 
@@ -29,7 +32,7 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
    */
   const { data, error, isLoading, isError } = useQuery<FetchRecipesResponse>({
     queryKey, // Unique query key for caching
-    queryFn: () => fetchRecipesService(filtersState), // API service function to fetch recipes
+    queryFn: () => fetchRecipesService(filtersState, currentPage), // API service function to fetch recipes
   });
 
   /**

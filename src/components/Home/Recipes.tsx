@@ -16,10 +16,6 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({
 
   return (
     <section className="bg-white p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Recipes
-      </h2>
-
       {/* Recipe Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {recipes.map((recipe) => (
