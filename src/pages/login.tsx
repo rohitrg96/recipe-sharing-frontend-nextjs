@@ -1,14 +1,14 @@
 import LoginForm from '@components/Auth/LoginForm'; // Import LoginForm component
-import { AuthRedirect } from '@components/Auth/AuthRedirect';
+import { AuthPosition } from '@/components/Auth/AuthPosition';
 import { checkAuthAndRedirect } from '@utils/authRedirectLogic';
 import { GetServerSideProps } from 'next';
 
 // LoginPage Component
 const LoginPage = () => {
   return (
-    <AuthRedirect>
+    <AuthPosition>
       <LoginForm />
-    </AuthRedirect>
+    </AuthPosition>
   );
 };
 

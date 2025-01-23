@@ -1,13 +1,13 @@
 import { GetServerSideProps } from 'next';
 import { checkAuthAndRedirect } from '@utils/authRedirectLogic';
 import SignUpForm from '@components/Auth/SignUpForm';
-import { AuthRedirect } from '@components/Auth/AuthRedirect';
+import { AuthPosition } from '@/components/Auth/AuthPosition';
 
 const SignUpPage = () => {
   return (
-    <AuthRedirect>
+    <AuthPosition>
       <SignUpForm />
-    </AuthRedirect>
+    </AuthPosition>
   );
 };
 
