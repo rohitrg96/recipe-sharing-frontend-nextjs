@@ -1,11 +1,14 @@
-import Footer from '@/components/Home/Footer';
-import Header from '@/components/Home/Header';
-import Navbar from '@/components/Home/Navbar';
-import RecipeCards from '@/components/Home/Recipes';
-import useFetchRecipes from '@/hooks/useFetchRecipes';
+import React, { Suspense } from 'react';
 import { GetServerSideProps } from 'next';
 import { HomePageProps } from '@/types/recipes';
 import { initialLoadLogic } from '@/utils/initialLoadLogic';
+
+// Lazy load components
+const Footer = React.lazy(() => import('@/components/Home/Footer'));
+const Header = React.lazy(() => import('@/components/Home/Header'));
+const Navbar = React.lazy(() => import('@/components/Home/Navbar'));
+const RecipeCards = React.lazy(() => import('@/components/Home/Recipes'));
+import useFetchRecipes from '@/hooks/useFetchRecipes';
 
 /**
  * HomePage Component
@@ -30,16 +33,20 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <div>
-      {/* Navigation Bar */}
-      <Navbar />
+      {/* Lazy-loaded Navigation Bar */}
+      <Suspense fallback={<div>Loading Navbar...</div>}>
+        <Navbar />
+      </Suspense>
 
-      {/* Header Section */}
-      <Header
-        filters={filtersState}
-        onFiltersChange={filterChange}
-        initialFilters={initialFilters}
-        setFiltersState={setFiltersState}
-      />
+      {/* Lazy-loaded Header Section */}
+      <Suspense fallback={<div>Loading Header...</div>}>
+        <Header
+          filters={filtersState}
+          onFiltersChange={filterChange}
+          initialFilters={initialFilters}
+          setFiltersState={setFiltersState}
+        />
+      </Suspense>
 
       {/* Error Handling */}
       {isError && (
@@ -50,14 +57,14 @@ const HomePage: React.FC<HomePageProps> = ({
 
       {/* Loading State */}
       {isLoading && (
-        <div className="loading-indicator flex items-center justify-center h-64 text-center text-red-500">
+        <div className="loading-indicator text-xl flex items-center justify-center h-64 text-center text-red-500">
           <p>Loading recipes...</p>
         </div>
       )}
 
-      {/* Recipe Cards Section */}
+      {/* Lazy-loaded Recipe Cards Section */}
       {!isLoading && !isError && (
-        <>
+        <Suspense fallback={<div>Loading Recipes...</div>}>
           {recipes.length > 0 ? (
             <RecipeCards
               recipes={recipes}
@@ -70,11 +77,13 @@ const HomePage: React.FC<HomePageProps> = ({
               <p>Oops! No Recipes found, try rephrasing the query.</p>
             </div>
           )}
-        </>
+        </Suspense>
       )}
 
-      {/* Footer Section */}
-      <Footer />
+      {/* Lazy-loaded Footer Section */}
+      <Suspense fallback={<div>Loading Footer...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

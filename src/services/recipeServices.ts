@@ -24,7 +24,6 @@ export const fetchRecipesService = async (
       page,
       limit,
     }).toString();
-    console.log(query, 'query');
 
     //recipe-sharing-backend-theta.vercel.app/api/
     // recipes?ingredients=oni%5C&minRating=&maxPreparationTime=&page=1&limit=12

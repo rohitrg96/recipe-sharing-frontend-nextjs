@@ -24,8 +24,6 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
     [filtersState, currentPage]
   );
 
-  console.log(queryKey, 'queryKey');
-
   /**
    * Fetch recipes dynamically based on filters and current pagination state.
    * React Query automatically manages caching and deduplication using the query key.
