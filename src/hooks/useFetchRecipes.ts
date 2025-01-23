@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, SetStateAction } from 'react';
 import { Filter, Recipe, FetchRecipesResponse } from '@/types/recipes';
 import { fetchRecipesService } from '@/services/recipeServices';
 import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from 'use-debounce';
 
 /**
  * Custom hook to manage recipe fetching, filters, and pagination.
@@ -16,12 +17,21 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
   const [filtersState, setFiltersState] = useState<Filter>(initialFilters);
 
   /**
+   * Debounce the filters state to reduce the frequency of API calls.
+   *
+   * Debouncing ensures that the API request is made only after a specified delay
+   * (500ms in this case) once the user stops making changes to the filters.
+   * This prevents unnecessary calls to the API during rapid filter updates.
+   */
+  const [debouncedFilterState] = useDebounce(filtersState, 500);
+
+  /**
    * Memoized query key for React Query. This ensures the query key updates
-   * only when filtersState changes, reducing unnecessary re-renders.
+   * only when `debouncedFilterState` or `currentPage` changes, reducing unnecessary re-renders.
    */
   const queryKey = useMemo(
-    () => ['recipes', filtersState, currentPage],
-    [filtersState, currentPage]
+    () => ['recipes', debouncedFilterState, currentPage],
+    [debouncedFilterState, currentPage]
   );
 
   /**
@@ -30,7 +40,7 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
    */
   const { data, error, isLoading, isError } = useQuery<FetchRecipesResponse>({
     queryKey, // Unique query key for caching
-    queryFn: () => fetchRecipesService(filtersState, currentPage), // API service function to fetch recipes
+    queryFn: () => fetchRecipesService(debouncedFilterState, currentPage), // API service function to fetch recipes
   });
 
   /**
@@ -45,6 +55,7 @@ const useFetchRecipes = (initialFilters: Filter, initialRecipes: Recipe[]) => {
   /**
    * Callback to update the filter state dynamically when a filter value changes.
    * Merges the new filter value with the existing state.
+   *
    * @param key - Filter key (e.g., "ingredient", "rating").
    * @param value - Filter value to update (e.g., "Tomato", 4).
    * useCallback ensures this function is memoized and not recreated on every render.

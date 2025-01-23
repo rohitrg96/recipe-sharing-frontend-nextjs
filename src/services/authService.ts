@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 // Environment variable for API base URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
