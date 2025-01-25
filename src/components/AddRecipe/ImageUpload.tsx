@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { uploadImage } from '@/services/uploadImageService';
 
 interface ImageUploadProps {
   imagePreview: string | null;
@@ -12,24 +13,29 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setImagePreview,
   setFieldValue,
 }) => {
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // Track the selected file
+  const [isUploading, setIsUploading] = useState(false); // Track upload state
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
+      setSelectedFile(file); // Save the selected file
+    }
+  };
 
-      // Call your image upload API
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
-      const imageUrl = data.data.url;
-
-      setImagePreview(imageUrl);
-      setFieldValue('image', imageUrl);
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+    setIsUploading(true); // Start upload process
+    try {
+      const response = await uploadImage(selectedFile); // Call the upload API
+      const imageUrl = response.data.url;
+      console.log(imageUrl, response);
+      setImagePreview(imageUrl); // Update the preview
+      setFieldValue('image', imageUrl); // Set the form field value
+    } catch (error) {
+      console.error('Image upload failed:', error);
+    } finally {
+      setIsUploading(false); // End upload process
     }
   };
 
@@ -39,17 +45,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       {imagePreview && (
         <div className="mb-2">
           <Image
-            src={imagePreview || '/placeholder-image.jpg'} // Provide a placeholder if no preview is available
+            src={imagePreview || '/placeholder-image.jpg'}
             alt="Recipe Preview"
-            width={160} // Matches the w-40 in Tailwind (40 x 4 = 160px)
-            height={160} // Matches the h-40 in Tailwind
+            width={160}
+            height={160}
             className="object-cover rounded-md"
           />
           <button
             type="button"
             onClick={() => {
               setImagePreview(null);
-              setFieldValue('image', '');
+              setFieldValue('image', ''); // Clear the form field
+              setSelectedFile(null);
             }}
             className="text-red-500 hover:text-red-700"
           >
@@ -57,17 +64,33 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </button>
         </div>
       )}
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="block w-full text-sm text-gray-500
-          file:mr-4 file:py-2 file:px-4
-          file:rounded-full file:border-0
-          file:text-sm file:font-semibold
-          file:bg-blue-50 file:text-blue-700
-          hover:file:bg-blue-100"
-      />
+      <div className="flex items-center space-x-4 mt-2">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-blue-50 file:text-blue-700
+            hover:file:bg-blue-100"
+        />
+        {selectedFile && (
+          <button
+            type="button"
+            onClick={handleUpload}
+            disabled={isUploading}
+            className={`py-2 px-4 rounded-md text-white ${
+              isUploading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
+          >
+            {isUploading ? 'Uploading...' : 'Upload Image'}
+          </button>
+        )}
+      </div>
     </div>
   );
 };
