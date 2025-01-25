@@ -5,8 +5,7 @@ const AddRecipePage: React.FC = () => {
   return (
     // <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
     <AuthPosition>
-      <div className="max-w-4xl w-full bg-white shadow-md rounded-md p-6">
-        <h1 className="text-2xl font-semibold mb-6">Add a New Recipe</h1>
+      <div className="max-w-3xl w-full  rounded-md p-6">
         <AddRecipeForm />
       </div>
     </AuthPosition>
