@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { uploadImage } from '@/services/uploadImageService';
+import { toast } from 'react-toastify';
 
 interface ImageUploadProps {
   imagePreview: string | null;
@@ -32,8 +33,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       console.log(imageUrl, response);
       setImagePreview(imageUrl); // Update the preview
       setFieldValue('image', imageUrl); // Set the form field value
-    } catch (error) {
+    } catch (error: any) {
       console.error('Image upload failed:', error);
+      toast.error(error.response.data?.message);
     } finally {
       setIsUploading(false); // End upload process
     }
