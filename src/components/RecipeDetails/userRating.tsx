@@ -1,12 +1,13 @@
 import { UserRating } from '@/types/recipes';
-import React, { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
+// import React, { Dispatch, SetStateAction } from 'react';
 
 const RatingStars: React.FC<{
-  setRating: Dispatch<SetStateAction<number | null>>;
+  handleRate: (newRating: number) => void;
   userRating: UserRating | null;
-}> = ({ userRating, setRating }) => {
+}> = ({ userRating, handleRate }) => {
   // Fallback state for rating in case it's not provided
-  const [rating, setRating] = React.useState(userRating?.rating || 0);
+  const [rating, setRating] = useState(userRating?.rating || 0);
 
   return (
     <div className="mt-4">
@@ -35,10 +36,10 @@ const RatingStars: React.FC<{
               <button
                 key={star}
                 onClick={() => {
-                  setRating(star);
-                  setRating(star); // Pass the rating value to the parent handler
+                  setRating(star); // Update state with the clicked star value
+                  handleRate(star); // Trigger parent function with the new rating
                 }}
-                className={`text-2xl ${
+                className={`text-2xl bg-black  ${
                   star <= Number(rating) ? 'text-yellow-500' : 'text-gray-300'
                 }`}
               >

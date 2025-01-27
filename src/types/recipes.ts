@@ -17,7 +17,7 @@ export interface UserComment {
 
 export interface UserRating {
   _id: string;
-  rating: string;
+  rating: number;
   createdAt: string;
 }
 
@@ -42,11 +42,7 @@ export interface RecipeData {
     lastName: string;
     email: string;
   };
-  stars: Array<{
-    user: { _id: string; firstName: string; lastName: string; email: string };
-    rating: number;
-    _id: string;
-  }>;
+  stars: UserRating[];
   comments: Comment[];
 }
 

@@ -5,6 +5,7 @@ import {
   addComment,
   fetchRecipeService,
   fetchUserFeedback,
+  addRating,
 } from '@/services/recipeServices';
 import { getAuthToken } from '@/utils/getAuthToken';
 
@@ -12,7 +13,7 @@ const useRecipeDetails = (initialData: RecipeData) => {
   const recipeId = initialData._id;
   const token = getAuthToken(false, null);
   const [newComment, setNewComment] = useState('');
-  const [rating, setRating] = useState<number | null>(null);
+  // const [rating, setRating] = useState<number | null>(null);
   const queryClient = useQueryClient();
 
   /**
@@ -90,6 +91,15 @@ const useRecipeDetails = (initialData: RecipeData) => {
     }, [queryClient, recipeQueryKey, userFeedbackQueryKey]),
   });
 
+  const handleRate = (newRating: number) => {
+    // setRating(newRating); // Update UI
+    addRatingMutation.mutate(newRating, {
+      onError: (error) => {
+        console.error('Error submitting rating:', error);
+      },
+    });
+  };
+
   return {
     recipe,
     isLoading,
@@ -97,11 +107,12 @@ const useRecipeDetails = (initialData: RecipeData) => {
     userFeedback,
     userComment,
     userRating,
-    rating,
+    // rating,
     newComment,
     isFeedbackLoading,
+    handleRate,
     setNewComment,
-    setRating,
+    // setRating,
     handleSubmitComment,
   };
 };

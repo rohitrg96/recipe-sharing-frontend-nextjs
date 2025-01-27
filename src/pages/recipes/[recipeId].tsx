@@ -16,11 +16,12 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
     error,
     newComment,
     setNewComment,
-    rating,
-    setRating,
+    // rating,
+    handleRate,
+    // setRating,
+    userRating,
     handleSubmitComment,
     userComment,
-    userRating,
   } = useRecipeDetails(initialData);
 
   if (isLoading) return <p className="text-center text-xl mt-10">Loading...</p>;
@@ -114,7 +115,7 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
         </div>
       )}
 
-      <RatingStars userRating={userRating} setRating={setRating} />
+      <RatingStars userRating={userRating} handleRate={handleRate} />
     </div>
   );
 };
