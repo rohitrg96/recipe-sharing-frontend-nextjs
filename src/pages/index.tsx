@@ -4,11 +4,10 @@ import { HomePageProps } from '@/types/recipes';
 import { initialLoadLogic } from '@/utils/initialLoadLogic';
 
 // Lazy load components
-const Footer = React.lazy(() => import('@/components/Home/Footer'));
 const Header = React.lazy(() => import('@/components/Home/Header'));
-const Navbar = React.lazy(() => import('@/components/Home/Navbar'));
 const RecipeCards = React.lazy(() => import('@/components/Home/Recipes'));
 import useFetchRecipes from '@/hooks/useFetchRecipes';
+import Layout from '@/components/Home/Layout';
 
 /**
  * HomePage Component
@@ -33,57 +32,49 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <div>
-      {/* Lazy-loaded Navigation Bar */}
-      <Suspense fallback={<div>Loading Navbar...</div>}>
-        <Navbar />
-      </Suspense>
-
-      {/* Lazy-loaded Header Section */}
-      <Suspense fallback={<div>Loading Header...</div>}>
-        <Header
-          filters={filtersState}
-          onFiltersChange={filterChange}
-          initialFilters={initialFilters}
-          setFiltersState={setFiltersState}
-        />
-      </Suspense>
-
-      {/* Error Handling */}
-      {isError && (
-        <div className="error-banner">
-          <p>Failed to load recipes. Please try again later.</p>
-        </div>
-      )}
-
-      {/* Loading State */}
-      {isLoading && (
-        <div className="loading-indicator text-xl flex items-center justify-center h-64 text-center text-red-500">
-          <p>Loading recipes...</p>
-        </div>
-      )}
-
-      {/* Lazy-loaded Recipe Cards Section */}
-      {!isLoading && !isError && (
-        <Suspense fallback={<div>Loading Recipes...</div>}>
-          {recipes.length > 0 ? (
-            <RecipeCards
-              recipes={recipes}
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange} // Pagination handler
-            />
-          ) : (
-            <div className="flex items-center justify-center text-center text-red-500 text-xl h-64 mt-10">
-              <p>Oops! No Recipes found, try rephrasing the query.</p>
-            </div>
-          )}
+      <Layout>
+        {/* Lazy-loaded Header Section */}
+        <Suspense fallback={<div>Loading Header...</div>}>
+          <Header
+            filters={filtersState}
+            onFiltersChange={filterChange}
+            initialFilters={initialFilters}
+            setFiltersState={setFiltersState}
+          />
         </Suspense>
-      )}
 
-      {/* Lazy-loaded Footer Section */}
-      <Suspense fallback={<div>Loading Footer...</div>}>
-        <Footer />
-      </Suspense>
+        {/* Error Handling */}
+        {isError && (
+          <div className="error-banner">
+            <p>Failed to load recipes. Please try again later.</p>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="loading-indicator text-xl flex items-center justify-center h-64 text-center text-red-500">
+            <p>Loading recipes...</p>
+          </div>
+        )}
+
+        {/* Lazy-loaded Recipe Cards Section */}
+        {!isLoading && !isError && (
+          <Suspense fallback={<div>Loading Recipes...</div>}>
+            {recipes.length > 0 ? (
+              <RecipeCards
+                recipes={recipes}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange} // Pagination handler
+              />
+            ) : (
+              <div className="flex items-center justify-center text-center text-red-500 text-xl h-64 mt-10">
+                <p>Oops! No Recipes found, try rephrasing the query.</p>
+              </div>
+            )}
+          </Suspense>
+        )}
+      </Layout>
     </div>
   );
 };

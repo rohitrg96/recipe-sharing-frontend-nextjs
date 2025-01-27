@@ -1,11 +1,14 @@
 import { AuthPosition } from '@/components/Auth/AuthPosition';
+import Layout from '@/components/Home/Layout';
 import AddRecipeForm from '@components/AddRecipe/AddRecipeForm';
 
 const AddRecipePage: React.FC = () => {
   return (
-    <AuthPosition>
-      <AddRecipeForm />
-    </AuthPosition>
+    <Layout>
+      <AuthPosition>
+        <AddRecipeForm />
+      </AuthPosition>
+    </Layout>
   );
 };
 
