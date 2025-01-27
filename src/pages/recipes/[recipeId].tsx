@@ -1,12 +1,13 @@
 import { GetServerSideProps } from 'next';
 import { RecipeData } from '@/types/recipes';
-import Image from 'next/image';
 import { initialRecipeDetails } from '@/utils/initialRecipeDetails';
 import useRecipeDetails from '@/hooks/useFetchRecipe';
-
-import CommentSection from '@/components/RecipeDetails/commentsSection';
-import RatingStars from '@/components/RecipeDetails/userRating';
+import CommentSection from '@/components/RecipeDetails/CommentSection';
+import RatingStars from '@/components/RecipeDetails/RatingStars';
 import Layout from '@/components/Home/Layout';
+import { RecipeImage } from '@/components/RecipeDetails/Recipeimage';
+import { RecipeInfo } from '@/components/RecipeDetails/RecipeInfo';
+import { AddComment } from '@/components/RecipeDetails/AddComment';
 
 const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
   initialData,
@@ -17,9 +18,7 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
     error,
     newComment,
     setNewComment,
-    // rating,
     handleRate,
-    // setRating,
     userRating,
     handleSubmitComment,
     userComment,
@@ -38,46 +37,12 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
     <Layout>
       <div className="container mx-auto p-6">
         {/* Recipe Details Section */}
-        <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex flex-col md:flex-row gap-6 md:min-h-screen">
           {/* Recipe Image */}
-          <div className="flex-1">
-            <div className="w-full h-80 md:h-full relative rounded-md shadow-lg overflow-hidden">
-              <Image
-                src={recipe?.image || '/placeholder-image.jpg'} // Fallback if image is not provided
-                alt={recipe?.title || 'Recipe Image'}
-                layout="fill" // Ensures the image takes the full width and height of the container
-                objectFit="cover" // Maintains aspect ratio and ensures the image covers the container
-                priority // Ensures this image loads quickly since it's above the fold
-                className="rounded-md" // Tailwind styles
-              />
-            </div>
-          </div>
+          <RecipeImage image={recipe?.image} title={recipe?.title} />
 
           {/* Recipe Information */}
-          <div className="flex-1">
-            <h1 className="text-4xl font-bold mb-4">{recipe?.title}</h1>
-            <p className="text-lg text-gray-600 mb-6">
-              Preparation Time: {recipe?.preparationTime} minutes
-            </p>
-
-            <h3 className="text-2xl font-semibold mb-2">Ingredients:</h3>
-            <ul className="list-disc pl-5 mb-6">
-              {recipe?.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-gray-700">
-                  {ingredient}
-                </li>
-              ))}
-            </ul>
-
-            <h3 className="text-2xl font-semibold mb-2">Steps:</h3>
-            <ol className="list-decimal pl-5">
-              {recipe?.steps.map((step, index) => (
-                <li key={index} className="text-gray-700 mb-2">
-                  {step}
-                </li>
-              ))}
-            </ol>
-          </div>
+          <RecipeInfo recipe={recipe} />
         </div>
 
         {/* Comments Section */}
@@ -100,33 +65,20 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
 
         {/* Add Comment Section */}
         {!userComment && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold mb-4">Add Your Comment</h2>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write your comment here..."
-              className="w-full h-24 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            <button
-              onClick={handleSubmitComment}
-              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              Submit Comment
-            </button>
-          </div>
+          <AddComment
+            newComment={newComment}
+            setNewComment={setNewComment}
+            handleSubmitComment={handleSubmitComment}
+          />
         )}
 
+        {/* Rating Section */}
         <RatingStars userRating={userRating} handleRate={handleRate} />
       </div>
     </Layout>
   );
 };
 
-/**
- * Server-Side Props: Fetch recipe details for the initial render
- */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return await initialRecipeDetails(context);
 };
