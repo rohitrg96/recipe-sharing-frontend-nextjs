@@ -17,7 +17,7 @@ const RatingStars: React.FC<{
           {[1, 2, 3, 4, 5].map((star) => (
             <span
               key={star}
-              className={`text-2xl ${
+              className={`text-2xl  bg-black ${
                 star <= Number(userRating.rating)
                   ? 'text-yellow-500'
                   : 'text-gray-300'

@@ -1,10 +1,13 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+
+const token = Cookies.get('authToken');
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
-    Authorization: `Bearer <YOUR_TOKEN>`,
+    Authorization: `Bearer ${token}`,
   },
 });
 
