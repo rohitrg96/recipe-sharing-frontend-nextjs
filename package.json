@@ -18,6 +18,7 @@
     "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "next": "15.1.4",
+    "next-redux-wrapper": "^8.1.0",
     "nookies": "^2.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

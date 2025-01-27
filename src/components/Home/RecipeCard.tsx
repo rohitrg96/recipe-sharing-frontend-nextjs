@@ -1,24 +1,27 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link'; // For routing
-import { Recipe } from '@/types/recipes'; // Define types for recipe
+import Link from 'next/link';
+import { Recipe } from '@/types/recipes';
 
-/**
- * RecipeCard Component
- * A component that displays a single recipe card with an image, title, rating, and reviews.
- * This card is clickable and routes to the details page of the recipe.
- */
 const RecipeCard: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
+  // Ensure fallback data for recipe fields
+  const {
+    _id,
+    image = 'https://via.placeholder.com/300x200',
+    title = 'Unknown Recipe',
+    starsCount = 0,
+    averageStars = 0,
+  } = recipe;
+
   return (
     <div className="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden">
-      {/* Recipe Card Link - Makes the entire card clickable */}
-      <Link href={`/recipes/${recipe._id}`} passHref>
+      <Link href={`/recipes/${_id}`} passHref>
         <div className="block">
           {/* Recipe Image */}
           <div className="h-60 relative">
             <Image
-              src={recipe.image || 'https://via.placeholder.com/300x200'}
-              alt={recipe.title}
+              src={image}
+              alt={title}
               fill
               style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -27,17 +30,17 @@ const RecipeCard: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
           </div>
           {/* Recipe Details */}
           <div className="p-4">
-            {recipe.starsCount === 0 ? (
+            {starsCount === 0 ? (
               <h5 className="text-base font-semibold text-gray-800 text-center">
                 Be the first to review!
               </h5>
             ) : (
               <div className="text-base font-semibold text-gray-800 text-center">
-                {`${recipe.starsCount} Reviews / ${recipe.averageStars.toFixed(1)} Average`}
+                {`${starsCount} Reviews / ${averageStars.toFixed(1)} Average`}
               </div>
             )}
             <h4 className="text-xl font-bold text-gray-800 text-center">
-              {recipe.title}
+              {title}
             </h4>
             {/* Dynamic Stars */}
             <div className="flex justify-center items-center mt-2">
@@ -46,9 +49,7 @@ const RecipeCard: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
                   key={index}
                   xmlns="http://www.w3.org/2000/svg"
                   fill={
-                    index < Math.round(recipe.averageStars)
-                      ? '#FFD700'
-                      : '#E5E7EB'
+                    index < Math.round(averageStars) ? '#FFD700' : '#E5E7EB'
                   }
                   viewBox="0 0 24 24"
                   strokeWidth="1"

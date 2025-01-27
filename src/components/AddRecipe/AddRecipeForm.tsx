@@ -13,7 +13,7 @@ const AddRecipeForm: React.FC = () => {
     useAddRecipe();
 
   return (
-    <div className="max-w-xl w-full rounded-md p-4">
+    <div className="max-w-xl w-full rounded-md p-4 ">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -33,7 +33,7 @@ const AddRecipeForm: React.FC = () => {
               <Field
                 name="title"
                 type="text"
-                className="mt-1 block w-full py-1 px-3 border-gray-300 rounded-md shadow-sm focus:border-blue-500"
+                className="mt-1 block w-full py-1 px-3 border-black rounded-md shadow-sm focus:border-blue-500"
                 placeholder="Enter recipe title"
               />
               <ErrorMessage

@@ -64,6 +64,7 @@ export interface HomePageProps {
   initialFilters: Filter;
   initialRecipes: Recipe[];
   initialTotalPages: number;
+  token: string;
 }
 
 export interface Filter {

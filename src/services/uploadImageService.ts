@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import api from '@/api/axiosInstance';
 
-export const uploadImage = async (file: File) => {
+export const uploadImage = async (file: File, token: string | null) => {
   const formData = new FormData();
   formData.append('image', file);
 
@@ -9,6 +9,7 @@ export const uploadImage = async (file: File) => {
     const response = await api.post(`/recipes/upload-image`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data', // Axios instance won't handle this automatically
+        Authorization: `Bearer ${token}`, // Add token in Authorization header
       },
     });
     return response.data; // Return the successful response data

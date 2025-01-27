@@ -1,13 +1,16 @@
 import React, { Suspense } from 'react';
-import { GetServerSideProps } from 'next';
+// import { GetServerSideProps } from 'next';
 import { HomePageProps } from '@/types/recipes';
 import { initialLoadLogic } from '@/utils/initialLoadLogic';
+import useFetchRecipes from '@/hooks/useFetchRecipes';
+import Layout from '@/components/Home/Layout';
+import { wrapper } from '@/store/store';
+// import { login } from '@/store/slices/authSlice';
+// import { useDispatch } from 'react-redux';
 
 // Lazy load components
 const Header = React.lazy(() => import('@/components/Home/Header'));
 const RecipeCards = React.lazy(() => import('@/components/Home/Recipes'));
-import useFetchRecipes from '@/hooks/useFetchRecipes';
-import Layout from '@/components/Home/Layout';
 
 /**
  * HomePage Component
@@ -16,6 +19,7 @@ import Layout from '@/components/Home/Layout';
 const HomePage: React.FC<HomePageProps> = ({
   initialFilters,
   initialRecipes,
+  // token,
 }) => {
   // Use the custom hook to manage state and fetching logic
   const {
@@ -29,6 +33,15 @@ const HomePage: React.FC<HomePageProps> = ({
     isLoading,
     isError,
   } = useFetchRecipes(initialFilters, initialRecipes);
+
+  // const dispatch = useDispatch();
+
+  // // Dispatch login action on the client side
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(login({ token: token }));
+  //   }
+  // }, [token, dispatch]);
 
   return (
     <div>
@@ -83,8 +96,11 @@ const HomePage: React.FC<HomePageProps> = ({
  * Server-side data fetching
  * Fetch initial filters, recipes, and pagination data
  */
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return await initialLoadLogic(context);
-};
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    // Call the initial load logic and pass the Redux dispatch
+    return await initialLoadLogic(context, store.dispatch);
+  }
+);
 
 export default HomePage;
