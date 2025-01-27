@@ -61,7 +61,7 @@ const useRecipeDetails = (initialData: RecipeData) => {
   const { data: userFeedback, isLoading: isFeedbackLoading } =
     useQuery<UserFeedback>({
       queryKey: userFeedbackQueryKey,
-      queryFn: () => fetchUserFeedback(recipeId),
+      queryFn: () => fetchUserFeedback(recipeId, token),
     });
 
   /**

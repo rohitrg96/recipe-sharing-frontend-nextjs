@@ -2,6 +2,8 @@ import { loginUser } from '@services/authService'; // API service for login
 import { FormikHelpers } from 'formik';
 import router from 'next/router';
 import { setCookie } from 'nookies'; // Library to manage cookies
+import { useDispatch } from 'react-redux';
+import { login } from '@/store/slices/authSlice';
 
 interface LoginFormValues {
   userName: string;
@@ -10,6 +12,8 @@ interface LoginFormValues {
 
 // Custom hook for login logic
 export const useLogin = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = async (
     values: LoginFormValues,
     actions: FormikHelpers<LoginFormValues>
@@ -26,6 +30,9 @@ export const useLogin = () => {
         maxAge: 30 * 24 * 60 * 60, // Token expires in 30 days
         path: '/', // Cookie accessible across the entire site
       });
+
+      // Update Redux state
+      dispatch(login(token));
 
       // Reset form fields on successful login
       actions.resetForm();

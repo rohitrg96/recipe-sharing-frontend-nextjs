@@ -27,11 +27,8 @@ export const fetchRecipesService = async (
       limit,
     }).toString();
 
-    //recipe-sharing-backend-theta.vercel.app/api/
-    // recipes?ingredients=oni%5C&minRating=&maxPreparationTime=&page=1&limit=12
-
     // API call to fetch recipes
-    const response = await axios.get(`${API_URL}/recipes?${query}`);
+    const response = await api.get(`/recipes?${query}`);
 
     // Return the response data
     return response.data.data;
@@ -45,7 +42,7 @@ export const fetchRecipeService = async (_id: string, token: string | null) => {
   try {
     // API call to fetch recipe
 
-    const response = await axios.get(`${API_URL}/recipes/${_id}`, {
+    const response = await api.get(`${API_URL}/recipes/${_id}`, {
       headers: {
         Authorization: `Bearer ${token}`, // Add token in Authorization header
       },
@@ -75,16 +72,15 @@ export const addComment = async (recipeId: string, comment: string) => {
 };
 
 // Fetch user feedback on a recipe
-export const fetchUserFeedback = async (recipeId: string) => {
-  const token = getAuthToken(false, null);
-  const response = await axios.get(
-    `${API_URL}/recipes/user-feedback/${recipeId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`, // Add token in Authorization header
-      },
-    }
-  );
+export const fetchUserFeedback = async (
+  recipeId: string,
+  token: string | null
+) => {
+  const response = await api.get(`/recipes/user-feedback/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`, // Add token in Authorization header
+    },
+  });
   return response.data; // Assuming the response has a `data` object
 };
 

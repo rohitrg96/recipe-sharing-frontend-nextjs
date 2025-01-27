@@ -10,9 +10,7 @@ export const initialRecipeDetails = async (
   try {
     // Fetch initial recipes from the API
     const token = getAuthToken(true, context);
-    console.log(token, 'token from serverside');
     const res = await fetchRecipeService(recipeId, token);
-    console.log(res, 'res');
 
     return {
       props: {
