@@ -27,7 +27,7 @@ export const useLogin = () => {
 
       // Store the token in cookies
       setCookie(null, 'authToken', token, {
-        maxAge: 30 * 24 * 60 * 60, // Token expires in 30 days
+        maxAge: 2 * 60 * 60, // Token expires in 30 days
         path: '/', // Cookie accessible across the entire site
       });
 

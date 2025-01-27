@@ -19,6 +19,7 @@ export const useAddRecipe = () => {
   const handleSubmit = async (values: typeof initialValues) => {
     try {
       const token = getAuthToken(false, null);
+
       const result = await addRecipe(values, token);
       if (result.success) {
         toast.success('Recipe added successfully! 🎉');

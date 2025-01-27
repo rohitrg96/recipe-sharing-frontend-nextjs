@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import useAppDispatch from '@hooks/useAppDispatch'; // Import custom hooks for Redux
 import useAppSelector from '@/hooks/useAppSelector';
 import { logout } from '@/store/slices/authSlice'; // Import the logout action
+import Cookies from 'js-cookie';
+import api from '@/api/axiosInstance';
 
 const Navbar: React.FC = () => {
   const router = useRouter();
@@ -21,7 +23,14 @@ const Navbar: React.FC = () => {
   };
 
   // Handle logout functionality
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await api.post('/auth/logout', null, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('authToken')}`,
+      },
+    });
+
+    Cookies.remove('authToken'); // Remove the authToken cookie
     dispatch(logout());
     router.push('/'); // Redirect to home after logout
   };
@@ -62,12 +71,12 @@ const Navbar: React.FC = () => {
                 >
                   Add Recipe
                 </button>
-                <button
+                {/* <button
                   onClick={() => router.push('/about')}
                   className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                 >
                   About Us
-                </button>
+                </button> */}
                 <button
                   onClick={handleLogout}
                   className="block w-full px-4 py-2 text-left hover:bg-gray-100 text-red-600"

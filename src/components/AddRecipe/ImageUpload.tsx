@@ -46,12 +46,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     <div>
       <label className="block text-gray-700 font-medium">Recipe Image</label>
       {imagePreview && (
-        <div className="mb-2">
+        <div className="mb-1">
           <Image
             src={imagePreview || '/placeholder-image.jpg'}
             alt="Recipe Preview"
-            width={30}
-            height={30}
+            width={150}
+            height={150}
             className="object-cover rounded-md"
           />
           <button
@@ -67,7 +67,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </button>
         </div>
       )}
-      <div className="flex items-center space-x-4 mt-2">
+      <div className="flex items-center space-x-4 ">
         <input
           type="file"
           accept="image/*"

@@ -4,6 +4,7 @@ import api from '@/api/axiosInstance';
 export const uploadImage = async (file: File, token: string | null) => {
   const formData = new FormData();
   formData.append('image', file);
+  console.log('token', token);
 
   try {
     const response = await api.post(`/recipes/upload-image`, formData, {
@@ -12,6 +13,7 @@ export const uploadImage = async (file: File, token: string | null) => {
         Authorization: `Bearer ${token}`, // Add token in Authorization header
       },
     });
+    console.log('res', response);
     return response.data; // Return the successful response data
   } catch (error: any) {
     console.error('Upload error:', error);
