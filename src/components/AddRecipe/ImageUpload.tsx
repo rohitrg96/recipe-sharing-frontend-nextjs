@@ -29,6 +29,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setIsUploading(true); // Start upload process
     try {
       const response = await uploadImage(selectedFile); // Call the upload API
+      console.log(response, 'response');
       const imageUrl = response.data.url;
       console.log(imageUrl, response);
       setImagePreview(imageUrl); // Update the preview

@@ -1,58 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import ImageUpload from './ImageUpload';
-import { addRecipe } from '@/services/addRecipeService';
-import { toast } from 'react-toastify'; // Import Toastify
-import { useRouter } from 'next/router'; // Import Next.js router for navigation
+import ImageUpload from '@components/AddRecipe/ImageUpload';
+import { useAddRecipe } from '@hooks/useAddRecipe';
+import { validationSchema } from './validationSchema';
 
+/**
+ * AddRecipeForm Component
+ * Handles the form to add a new recipe with fields for title, ingredients, steps, preparation time, and an image upload.
+ */
 const AddRecipeForm: React.FC = () => {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const router = useRouter();
-
-  const initialValues = {
-    title: '',
-    ingredients: [''],
-    steps: [''],
-    preparationTime: '',
-    image: '',
-  };
-
-  const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    ingredients: Yup.array()
-      .of(Yup.string().required('Ingredient is required'))
-      .min(1, 'At least one ingredient is required'),
-    steps: Yup.array()
-      .of(Yup.string().required('Step is required'))
-      .min(1, 'At least one step is required'),
-    preparationTime: Yup.number()
-      .typeError('Preparation time must be a number')
-      .required('Preparation time is required'),
-    image: Yup.string().required('Image is required'),
-  });
-
-  const handleSubmit = async (values: typeof initialValues) => {
-    try {
-      const result = await addRecipe(values);
-      if (result.success) {
-        toast.success('Recipe added successfully! 🎉');
-        setTimeout(() => {
-          router.push('/');
-        }, 2000);
-      } else {
-        toast.error(result.error || 'Failed to add recipe. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error adding recipe:', error);
-      toast.error('An unexpected error occurred. Please try again.');
-    }
-  };
+  const { initialValues, handleSubmit, imagePreview, setImagePreview } =
+    useAddRecipe();
 
   return (
     <div className="max-w-xl w-full rounded-md p-4">
-      {' '}
-      {/* Reduced max width */}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -60,12 +21,9 @@ const AddRecipeForm: React.FC = () => {
       >
         {({ values, setFieldValue }) => (
           <Form className="space-y-3">
-            {' '}
-            {/* Reduced vertical spacing */}
             {/* Title */}
             <div>
-              <h1 className="text-xl font-semibold mb-4">Add a New Recipe</h1>{' '}
-              {/* Smaller title */}
+              <h1 className="text-xl font-semibold mb-4">Add a New Recipe</h1>
               <label
                 htmlFor="title"
                 className="block text-gray-700 text-sm font-medium"
@@ -84,6 +42,7 @@ const AddRecipeForm: React.FC = () => {
                 className="text-red-500 text-sm"
               />
             </div>
+
             {/* Ingredients */}
             <div>
               <label className="block text-gray-700 text-sm font-medium">
@@ -130,6 +89,7 @@ const AddRecipeForm: React.FC = () => {
                 )}
               </FieldArray>
             </div>
+
             {/* Steps */}
             <div>
               <label className="block text-gray-700 text-sm font-medium">
@@ -176,6 +136,7 @@ const AddRecipeForm: React.FC = () => {
                 )}
               </FieldArray>
             </div>
+
             {/* Preparation Time */}
             <div>
               <label
@@ -196,6 +157,7 @@ const AddRecipeForm: React.FC = () => {
                 className="text-red-500 text-sm"
               />
             </div>
+
             {/* Image Upload */}
             <ImageUpload
               imagePreview={imagePreview}
@@ -207,6 +169,7 @@ const AddRecipeForm: React.FC = () => {
               component="p"
               className="text-red-500 text-sm"
             />
+
             {/* Submit Button */}
             <div>
               <button
