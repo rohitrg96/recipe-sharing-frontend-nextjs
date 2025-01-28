@@ -21,6 +21,7 @@ const RecipeCard: React.FC<{ recipe: Recipe; onClick: () => void }> = ({
 
   return (
     <div
+      data-testid="recipe-card"
       onClick={onClick}
       className="cursor-pointer bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
     >
