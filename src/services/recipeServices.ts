@@ -48,8 +48,6 @@ export const fetchRecipeService = async (_id: string, token: string | null) => {
       },
     });
 
-    // Return the response data
-    console.log(response.data.data);
     return response.data.data;
   } catch (error) {
     console.error('Error fetching recipes:', error);
