@@ -37,7 +37,10 @@ const CommentSection: React.FC<{
         </p>
         {/* Edit Button */}
         {comment._id === userComment?._id && (
-          <button onClick={handleEditClick} className="text-blue-500 text-sm">
+          <button
+            onClick={handleEditClick}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          >
             Edit
           </button>
         )}

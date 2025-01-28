@@ -85,6 +85,18 @@ export const fetchUserFeedback = async (
 };
 
 // Add a rating to a recipe
-export const addRating = async (recipeId: string, rating: number) => {
-  await api.put(`/recipes/rating/${recipeId}`, { rating });
+export const addRating = async (
+  recipeId: string,
+  rating: number,
+  token: string | null
+) => {
+  await api.put(
+    `/recipes/rating/${recipeId}`,
+    { rating },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add token in Authorization header
+      },
+    }
+  );
 };

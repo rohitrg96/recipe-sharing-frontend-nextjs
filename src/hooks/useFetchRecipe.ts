@@ -82,8 +82,8 @@ const useRecipeDetails = (initialData: RecipeData) => {
    */
   const addRatingMutation = useMutation({
     mutationFn: useCallback(
-      (newRating: number) => addRating(recipeId, newRating),
-      [recipeId]
+      (newRating: number) => addRating(recipeId, newRating, token),
+      [recipeId, token]
     ),
     onSuccess: useCallback(() => {
       queryClient.invalidateQueries({ queryKey: recipeQueryKey });

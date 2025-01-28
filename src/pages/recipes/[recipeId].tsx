@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 import { RecipeData } from '@/types/recipes';
-import { initialRecipeDetails } from '@/utils/initialRecipeDetails';
 import useRecipeDetails from '@/hooks/useFetchRecipe';
 import CommentSection from '@/components/RecipeDetails/CommentSection';
 import RatingStars from '@/components/RecipeDetails/RatingStars';
@@ -8,6 +7,10 @@ import Layout from '@/components/Home/Layout';
 import { RecipeImage } from '@/components/RecipeDetails/Recipeimage';
 import { RecipeInfo } from '@/components/RecipeDetails/RecipeInfo';
 import { AddComment } from '@/components/RecipeDetails/AddComment';
+import { wrapper } from '@/store/store';
+import { parseCookies } from 'nookies';
+import { login } from '@/store/slices/authSlice';
+import { fetchRecipeService } from '@/services/recipeServices';
 
 const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
   initialData,
@@ -79,8 +82,34 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return await initialRecipeDetails(context);
-};
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async (context) => {
+    // Retrieve the authentication token from cookies
+    const cookies = parseCookies(context);
+    const token = cookies.authToken || null;
+
+    // Dispatch the login action if the token is available
+    if (token) {
+      store.dispatch(login({ token }));
+    }
+
+    // Fetch initial recipe details
+    const recipeId = context.params?.recipeId as string;
+    let initialData = null;
+
+    try {
+      if (token) {
+        initialData = await fetchRecipeService(recipeId, token);
+      }
+    } catch (error) {
+      console.error('Error fetching initial recipes:', error);
+    }
+
+    return {
+      props: {
+        initialData,
+      },
+    };
+  });
 
 export default RecipeDetailsPage;
