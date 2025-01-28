@@ -14,7 +14,7 @@ const AddRecipePage: React.FC = () => {
         description="Share your delicious recipe with the community. Fill in details like title, ingredients, steps, and preparation time."
         ogTitle="Add a New Recipe"
         ogDescription="Share your delicious recipe with others and inspire the cooking community."
-        ogImage="https://example.com/add-recipe-thumbnail.jpg"
+        ogImage="https://res.cloudinary.com/ddaq6new3/image/upload/v1738040886/tasty-tales-images/yldiyagwj0peq0b862cw.png"
       />
       <Layout>
         <AddRecipeForm />
