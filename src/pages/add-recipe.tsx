@@ -31,9 +31,15 @@ export const getServerSideProps: GetServerSideProps =
     // Dispatch the login action if token is available
     if (token) {
       store.dispatch(login({ token }));
+      return { props: {} }; // No additional props required
+    } else {
+      return {
+        redirect: {
+          destination: '/login', // Path to the login page
+          permanent: false, // Indicates this is not a permanent redirect (308 vs 302)
+        },
+      };
     }
-
-    return { props: {} }; // No additional props required
   });
 
 export default AddRecipePage;
