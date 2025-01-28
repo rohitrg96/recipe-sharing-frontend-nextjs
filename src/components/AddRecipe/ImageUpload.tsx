@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { uploadImage } from '@/services/uploadImageService';
 import { toast } from 'react-toastify';
+import { getAuthToken } from '@/utils/getAuthToken';
 
 interface ImageUploadProps {
   imagePreview: string | null;
@@ -28,7 +29,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     if (!selectedFile) return;
     setIsUploading(true); // Start upload process
     try {
-      const response = await uploadImage(selectedFile); // Call the upload API
+      const token = getAuthToken(false, null);
+      const response = await uploadImage(selectedFile, token); // Call the upload API
       const imageUrl = response.data.url;
       setImagePreview(imageUrl); // Update the preview
       setFieldValue('image', imageUrl); // Set the form field value
@@ -44,12 +46,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     <div>
       <label className="block text-gray-700 font-medium">Recipe Image</label>
       {imagePreview && (
-        <div className="mb-2">
+        <div className="mb-1">
           <Image
             src={imagePreview || '/placeholder-image.jpg'}
             alt="Recipe Preview"
-            width={160}
-            height={160}
+            width={150}
+            height={150}
             className="object-cover rounded-md"
           />
           <button
@@ -65,7 +67,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </button>
         </div>
       )}
-      <div className="flex items-center space-x-4 mt-2">
+      <div className="flex items-center space-x-4 ">
         <input
           type="file"
           accept="image/*"

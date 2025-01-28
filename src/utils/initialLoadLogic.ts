@@ -1,17 +1,31 @@
 import { GetServerSidePropsContext } from 'next';
+import { parseCookies } from 'nookies';
 import { fetchRecipesService } from '@/services/recipeServices';
+import { AppDispatch } from '@/store/store';
+import { login } from '@/store/slices/authSlice';
 
-export const initialLoadLogic = async (context: GetServerSidePropsContext) => {
+export const initialLoadLogic = async (
+  context: GetServerSidePropsContext,
+  dispatch: AppDispatch
+) => {
   const { page, limit } = context.query;
 
   const initialFilters = {
-    minRating: '', // Rating options
+    minRating: '',
     maxPreparationTime: '',
     ingredients: '',
   };
 
+  // Retrieve the auth token from cookies
+  const cookies = parseCookies(context);
+  const token = cookies.authToken;
+
+  // Dispatch the token to the Redux store
+  if (token) {
+    dispatch(login({ token })); // Set the token in the Redux auth slice
+  }
+
   try {
-    // Fetch initial recipes from the API
     const res = await fetchRecipesService(
       initialFilters,
       page as string,
@@ -20,9 +34,9 @@ export const initialLoadLogic = async (context: GetServerSidePropsContext) => {
 
     return {
       props: {
-        initialFilters, // Pass filters to the Header component
-        initialRecipes: res.data, // Initial recipes for RecipeCards
-        initialTotalPages: res.pagination.totalPages,
+        initialFilters,
+        initialRecipes: res.data,
+        token: token || null, // Pass the token to the page props (optional)
       },
     };
   } catch (error) {
@@ -31,7 +45,7 @@ export const initialLoadLogic = async (context: GetServerSidePropsContext) => {
       props: {
         initialFilters,
         initialRecipes: [],
-        initialTotalPages: 1,
+        token: token || null,
       },
     };
   }

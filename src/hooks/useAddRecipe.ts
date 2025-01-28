@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { addRecipe } from '@/services/addRecipeService';
+import { getAuthToken } from '@/utils/getAuthToken';
 
 export const useAddRecipe = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -17,7 +18,9 @@ export const useAddRecipe = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      const result = await addRecipe(values);
+      const token = getAuthToken(false, null);
+
+      const result = await addRecipe(values, token);
       if (result.success) {
         toast.success('Recipe added successfully! 🎉');
         setTimeout(() => {
