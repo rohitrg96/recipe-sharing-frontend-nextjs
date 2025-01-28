@@ -38,7 +38,9 @@
     ".next/types/**/*.ts",
     "src/components/Home/Header.tsx",
     "cypress/**/*.ts",
-    "cypress.config.ts"
+    "cypress.config.ts",
+    "src/jest.setup.js",
+    "src/jest.config.js"
   ],
   "exclude": ["node_modules"]
 }
