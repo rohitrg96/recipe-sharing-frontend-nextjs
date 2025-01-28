@@ -10,16 +10,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  {
-    extends: [
-      'next/core-web-vitals',
-      'next/typescript',
-      'plugin:jest/recommended',
-      'plugin:jest-dom/recommended',
-      'plugin:testing-library/react',
-    ],
-    plugins: ['jest', 'testing-library', 'jest-dom'],
-  },
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn', // Add this to warn on 'any' usage
