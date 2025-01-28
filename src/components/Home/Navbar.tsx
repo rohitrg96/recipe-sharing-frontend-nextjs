@@ -57,9 +57,22 @@ const Navbar: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen((prev) => !prev)}
-              className="px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="flex items-center px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              My Account
+              <span>My Account</span>
+              <svg
+                className="ml-2 w-4 h-4 text-gray-300"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
             </button>
 
             {/* Dropdown Menu */}
