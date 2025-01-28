@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta
           property="og:image"
-          content="https://res.cloudinary.com/ddaq6new3/image/upload/v1738040886/tasty-tales-images/yldiyagwj0peq0b862cw.pngttps://your-image-url.com/og-image.jpg"
+          content="https://res.cloudinary.com/ddaq6new3/image/upload/v1738040886/tasty-tales-images/yldiyagwj0peq0b862cw.png"
         />
         <meta property="og:url" content="https://your-website.com" />
       </Head>
