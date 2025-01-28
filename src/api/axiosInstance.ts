@@ -3,9 +3,6 @@ import { toast } from 'react-toastify';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    Authorization: `Bearer <YOUR_TOKEN>`,
-  },
 });
 
 api.interceptors.response.use(
@@ -17,9 +14,6 @@ api.interceptors.response.use(
       switch (response.status) {
         case 401:
           toast.error('Unauthorized: Please log in again.');
-          // if (typeof window !== 'undefined') {
-          //   window.location.href = '/login'; // Use window for redirection
-          // }
           break;
         case 403:
           toast.error('Forbidden: You do not have access to this resource.');

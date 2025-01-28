@@ -9,6 +9,50 @@ export interface Recipe {
   averageStars: number;
 }
 
+export interface UserComment {
+  _id: string;
+  comment: string;
+  createdAt: string;
+}
+
+export interface UserRating {
+  _id: string;
+  rating: number;
+  createdAt: string;
+}
+
+export interface UserFeedback {
+  data: {
+    checkIfUserhasCommented: UserComment | null;
+    checkIfUserhasRated: UserRating | null;
+  };
+}
+
+// Define types for Recipe and UserFeedback
+export interface RecipeData {
+  _id: string;
+  title: string;
+  ingredients: string[];
+  steps: string[];
+  image: string | null;
+  preparationTime: number;
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  stars: UserRating[];
+  comments: Comment[];
+}
+
+export interface Comment {
+  user: { _id: string; firstName: string; lastName: string; email: string };
+  comment: string;
+  _id: string;
+  createdAt: string;
+}
+
 export interface RecipeCardsProps {
   recipes: Recipe[];
   currentPage: string;
@@ -20,6 +64,7 @@ export interface HomePageProps {
   initialFilters: Filter;
   initialRecipes: Recipe[];
   initialTotalPages: number;
+  token: string;
 }
 
 export interface Filter {

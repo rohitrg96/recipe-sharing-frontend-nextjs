@@ -1,3 +1,4 @@
+import api from '@/api/axiosInstance';
 import axios from 'axios';
 // Environment variable for API base URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -7,7 +8,7 @@ export const loginUser = async (credentials: {
   password: string;
 }) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, credentials); // Replace with your actual API endpoint
+    const response = await api.post(`/auth/login`, credentials); // Replace with your actual API endpoint
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
