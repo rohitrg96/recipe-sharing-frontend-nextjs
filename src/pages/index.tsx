@@ -1,12 +1,10 @@
 import React, { Suspense } from 'react';
-// import { GetServerSideProps } from 'next';
 import { HomePageProps } from '@/types/recipes';
 import { initialLoadLogic } from '@/utils/initialLoadLogic';
 import useFetchRecipes from '@/hooks/useFetchRecipes';
 import Layout from '@/components/Home/Layout';
 import { wrapper } from '@/store/store';
-// import { login } from '@/store/slices/authSlice';
-// import { useDispatch } from 'react-redux';
+import Head from 'next/head'; // Import the Head component for meta tags
 
 // Lazy load components
 const Header = React.lazy(() => import('@/components/Home/Header'));
@@ -34,17 +32,42 @@ const HomePage: React.FC<HomePageProps> = ({
     isError,
   } = useFetchRecipes(initialFilters, initialRecipes);
 
-  // const dispatch = useDispatch();
-
-  // // Dispatch login action on the client side
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(login({ token: token }));
-  //   }
-  // }, [token, dispatch]);
-
   return (
     <div>
+      {/* Meta Tags for HomePage */}
+      <Head>
+        <title>Tasty Talses - Home</title>
+        <meta
+          name="description"
+          content="Discover, share, and explore a wide variety of delicious recipes. Join the Recipe Sharing Platform today!"
+        />
+        <meta
+          name="keywords"
+          content="recipes, cooking, food, sharing, ratings, comments, discover recipes, food community"
+        />
+        <meta name="author" content="Rohit" />
+        <meta property="og:title" content="Recipe Sharing Platform - Home" />
+        <meta
+          property="og:description"
+          content="Discover, share, and explore a wide variety of delicious recipes. Join the Recipe Sharing Platform today!"
+        />
+        <meta
+          property="og:image"
+          content="https://res.cloudinary.com/ddaq6new3/image/upload/v1738040886/tasty-tales-images/yldiyagwj0peq0b862cw.png"
+        />
+        <meta property="og:url" content="https://your-website.com" />
+        <meta name="twitter:title" content="Recipe Sharing Platform - Home" />
+        <meta
+          name="twitter:description"
+          content="Discover, share, and explore a wide variety of delicious recipes. Join the Recipe Sharing Platform today!"
+        />
+        <meta
+          name="twitter:image"
+          content="https://res.cloudinary.com/ddaq6new3/image/upload/v1738040886/tasty-tales-images/yldiyagwj0peq0b862cw.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
       <Layout>
         {/* Lazy-loaded Header Section */}
         <Suspense fallback={<div>Loading Header...</div>}>
