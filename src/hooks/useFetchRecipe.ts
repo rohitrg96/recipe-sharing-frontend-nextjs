@@ -92,7 +92,6 @@ const useRecipeDetails = (initialData: RecipeData) => {
   });
 
   const handleRate = (newRating: number) => {
-    // setRating(newRating); // Update UI
     addRatingMutation.mutate(newRating, {
       onError: (error) => {
         console.error('Error submitting rating:', error);
@@ -107,12 +106,10 @@ const useRecipeDetails = (initialData: RecipeData) => {
     userFeedback,
     userComment,
     userRating,
-    // rating,
     newComment,
     isFeedbackLoading,
     handleRate,
     setNewComment,
-    // setRating,
     handleSubmitComment,
   };
 };

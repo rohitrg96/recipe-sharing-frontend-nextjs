@@ -60,6 +60,9 @@ const RecipeDetailsPage: React.FC<{ initialData: RecipeData }> = ({
                   key={comment._id}
                   comment={comment}
                   userComment={userComment}
+                  newComment={newComment}
+                  setNewComment={setNewComment}
+                  handleSubmitComment={handleSubmitComment}
                 />
               ))
             )}

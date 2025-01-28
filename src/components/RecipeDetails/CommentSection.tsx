@@ -5,14 +5,22 @@ import { Comment, UserComment } from '@/types/recipes';
 const CommentSection: React.FC<{
   comment: Comment;
   userComment: UserComment | null;
-}> = ({ comment, userComment }) => {
+  newComment: string;
+  setNewComment: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmitComment: () => void;
+}> = ({
+  comment,
+  userComment,
+  newComment,
+  setNewComment,
+  handleSubmitComment,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment.comment);
 
   // Open the modal and pre-fill the textarea with the current comment
   const handleEditClick = () => {
     setIsModalOpen(true);
-    setEditedComment(comment.comment); // Fill the textarea with the existing comment
+    setNewComment(comment.comment); // Fill the textarea with the existing comment
   };
 
   // Close the modal without saving the changes
@@ -22,7 +30,7 @@ const CommentSection: React.FC<{
 
   // Save the changes and close the modal
   const handleSave = () => {
-    // updateComment(comment._id, editedComment); // Call the update function with the edited text
+    handleSubmitComment();
     setIsModalOpen(false); // Close the modal after saving
   };
 
@@ -53,8 +61,8 @@ const CommentSection: React.FC<{
           <div className="bg-white p-6 rounded-lg w-full max-w-lg mx-4 sm:mx-6 md:mx-0">
             <h3 className="text-xl font-semibold mb-4">Edit Your Comment</h3>
             <textarea
-              value={editedComment}
-              onChange={(e) => setEditedComment(e.target.value)}
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-lg"
               rows={4}
             />
