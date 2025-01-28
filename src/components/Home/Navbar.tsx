@@ -12,7 +12,6 @@ const Navbar: React.FC = () => {
 
   // Access auth state from Redux
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-  console.log(isAuthenticated, 'isAuth');
 
   // Dropdown state for "My Account" menu
   const [dropdownOpen, setDropdownOpen] = useState(false);
