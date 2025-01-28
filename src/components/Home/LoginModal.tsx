@@ -28,6 +28,7 @@ const LoginModal: React.FC<{ onClose: () => void; onLogin: () => void }> = ({
             Cancel
           </button>
           <button
+            data-testid="login-redirect"
             onClick={onLogin}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >

@@ -17,6 +17,7 @@ const AuthRedirectLinks: React.FC<AuthRedirectLinksProps> = ({
     <div className="mt-4 text-center">
       <p className="text-sm text-gray-600">
         <button
+          data-testid="signup-link"
           onClick={onLinkClick1}
           className="text-blue-500 hover:underline"
         >
