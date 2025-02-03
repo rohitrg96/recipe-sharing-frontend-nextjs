@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress"],
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -35,7 +36,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Home/Header.tsx"
+    "src/components/Home/Header.tsx",
+    "cypress/**/*.ts",
+    "cypress.config.ts",
+    "jest.setup.js",
+    "jest.config.js"
   ],
   "exclude": ["node_modules"]
 }
