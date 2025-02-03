@@ -33,6 +33,7 @@ const AddRecipeForm: React.FC = () => {
                 </label>
                 <Field
                   name="title"
+                  id="title"
                   type="text"
                   className="mt-1 block w-full py-1 px-3 border-black rounded-md shadow-sm focus:border-blue-500"
                   placeholder="Enter recipe title"
