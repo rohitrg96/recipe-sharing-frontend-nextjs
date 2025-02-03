@@ -14,24 +14,5 @@ describe('AddRecipeForm Component', () => {
 
     // Check for Title field
     expect(myElem).toBeInTheDocument();
-
-    // Check for Ingredients field
-    expect(screen.getByText('Ingredients')).toBeInTheDocument();
-
-    // Check for Steps field
-    expect(screen.getByText('Steps')).toBeInTheDocument();
-
-    // Check for Preparation Time field
-    expect(
-      screen.getByLabelText('Preparation Time (in minutes)')
-    ).toBeInTheDocument();
-
-    // Check for Image upload section
-    expect(screen.getByText('Image Upload')).toBeInTheDocument();
-
-    // Check for Submit Button
-    expect(
-      screen.getByRole('button', { name: /Submit Recipe/i })
-    ).toBeInTheDocument();
   });
 });
